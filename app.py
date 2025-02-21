@@ -75,8 +75,8 @@ def classify_image(image):
         return {"error": "An unexpected error occurred", "details": str(e)}
 
 # Streamlit UI
-st.title("Anime vs. Real Aesthetic Classifier 🌟")
-st.write("Upload an image to check if it's **Anime or Real**!")
+st.title("Aesthetic Image Classifier 🌟")
+st.write("Upload an image to check if it's **Aesthetic or Not**!")
 
 uploaded_file = st.file_uploader("Choose an image (Max 3MB)...", type=["jpg", "png", "jpeg"])
 
