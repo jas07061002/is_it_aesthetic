@@ -5,18 +5,13 @@ import io
 import os
 import time
 
-# ✅ Function to get API Key (Handles missing/empty cases)
-def get_api_key():
-    HF_API_KEY = os.getenv("HF_API_KEY") or st.secrets.get("HF_API_KEY", "").strip()
-    
-    if not HF_API_KEY:
-        st.error("❌ Hugging Face API Key is missing! Add it to `.streamlit/secrets.toml` (local) or Streamlit Cloud Secrets.")
-        st.stop()
-    
-    return HF_API_KEY
+#hf_api_key = st.secrets.get("secrets", {}).get("HF_API_KEY")
+
 
 # ✅ Load API key securely
-HF_API_KEY = get_api_key()
+#HF_API_KEY = hf_api_key
+HF_API_KEY = st.secrets.get("HF_API_KEY", "").strip()
+
 API_URL = "https://api-inference.huggingface.co/models/cafeai/cafe_aesthetic"
 headers = {"Authorization": f"Bearer {HF_API_KEY}"}
 
@@ -24,7 +19,7 @@ headers = {"Authorization": f"Bearer {HF_API_KEY}"}
 def classify_image(image):
     # ✅ Convert to JPEG (reduces size)
     image = image.convert("RGB")  # Ensure correct format
-    image = image.resize((256, 256))  # Resize to 256x256
+    image = image.resize((128, 128))  # Resize to 128X128
 
     # ✅ Convert to bytes
     image_bytes = io.BytesIO()
