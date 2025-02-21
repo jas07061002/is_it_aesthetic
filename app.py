@@ -105,7 +105,7 @@ if uploaded_file:
         st.error("An unexpected error occurred. Check the logs for details.")
 
 # Display logs in Streamlit for debugging
-if st.button("Show Logs"):
-    with open("app.log", "r") as log_file:
-        st.text(log_file.read())
+#if st.button("Show Logs"):
+#    with open("app.log", "r") as log_file:
+#        st.text(log_file.read())
 
