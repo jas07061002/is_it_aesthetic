@@ -1,0 +1,6 @@
+python3.11 -m venv ml-env ## create env
+source ml-env/bin/activate # Activate the virtual environment
+pip install tensorflow datasets pillow numpy matplotlib streamlit
+pip install huggingface_hub datasets
+
+
