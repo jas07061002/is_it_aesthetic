@@ -54,7 +54,7 @@ def classify_image(image):
             return response.json()
         elif response.status_code == 503:
             # Model is still loading, wait & retry
-            logging.warning("⏳ Model is still loading. Retrying after estimated wait time.")
+            logging.warning("Model is still loading. Retrying after estimated wait time.")
             try:
                 error_data = response.json()
                 estimated_time = error_data.get("estimated_time", 30)
@@ -76,7 +76,7 @@ def classify_image(image):
 
 # Streamlit UI
 st.title("Anime vs. Real Aesthetic Classifier 🌟")
-st.write("Upload an image to check if it's **Anime or Real** using the `cafeai/cafe_aesthetic` model!")
+st.write("Upload an image to check if it's **Anime or Real**!")
 
 uploaded_file = st.file_uploader("Choose an image (Max 3MB)...", type=["jpg", "png", "jpeg"])
 
@@ -90,7 +90,7 @@ if uploaded_file:
             image = Image.open(uploaded_file)
             st.image(image, caption="Uploaded Image", use_container_width=True)
 
-            logging.info("📤 Image uploaded successfully. Processing...")
+            logging.info("Image uploaded successfully. Processing...")
             result = classify_image(image)
 
             if "error" in result:
