@@ -13,14 +13,13 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
-#hf_api_key = st.secrets.get("secrets", {}).get("HF_API_KEY")
-
 #  Load API key securely
 #HF_API_KEY = hf_api_key
 
 
 # Log API key retrieval
-HF_API_KEY = st.secrets.get("HF_API_KEY", "").strip()
+#HF_API_KEY = st.secrets.get("HF_API_KEY", "").strip()
+HF_API_KEY = st.secrets.get("secrets", {}).get("HF_API_KEY")
 
 if not HF_API_KEY:
     logging.error("Hugging Face API Key is missing! Check secrets.toml or Streamlit Cloud Secrets.")
@@ -34,7 +33,7 @@ headers = {"Authorization": f"Bearer {HF_API_KEY}"}
 
 # Function to classify images with error handling
 def classify_image(image):
-    logging.info("🔍 Starting image classification...")
+    logging.info("Starting image classification...")
 
     try:
         # Convert to JPEG (reduces size)
@@ -46,7 +45,7 @@ def classify_image(image):
         image.save(image_bytes, format="JPEG", quality=85)  # Compress
 
         # Send API request
-        logging.info("📡 Sending image to Hugging Face API...")
+        logging.info("Sending image to Hugging Face API...")
         response = requests.post(API_URL, headers=headers, data=image_bytes.getvalue())
 
         # Handle API response
@@ -95,7 +94,7 @@ if uploaded_file:
             result = classify_image(image)
 
             if "error" in result:
-                logging.error(f"❌ Classification error: {result['error']}")
+                logging.error(f"Classification error: {result['error']}")
                 st.error(f"{result['error']}\n\nDetails: {result.get('details', 'No additional info')}")
             else:
                 st.subheader(f"Prediction: {result[0]['label']} 🎉")
@@ -105,7 +104,7 @@ if uploaded_file:
         logging.exception(f"Unexpected error in Streamlit UI: {e}")
         st.error("An unexpected error occurred. Check the logs for details.")
 
-# ✅ Display logs in Streamlit for debugging
+# Display logs in Streamlit for debugging
 if st.button("Show Logs"):
     with open("app.log", "r") as log_file:
         st.text(log_file.read())
